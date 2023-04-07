@@ -10,4 +10,7 @@ void setupLocator() {
   locator.registerLazySingleton<DialogService>(
     () => DialogService(),
   );
+  locator.registerLazySingleton(
+    () => NavigationService(),
+  );
 }
