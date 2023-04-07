@@ -2,29 +2,22 @@ import 'package:budgetkp/presentation/dashboard/dashboard_view.dart';
 import 'package:budgetkp/presentation/profile/views/profile_view.dart';
 import 'package:budgetkp/presentation/transactions/views/transactions_view.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
-final GoRouter router = GoRouter(
-  routes: <RouteBase>[
-    GoRoute(
-      path: '/',
-      builder: (BuildContext context, GoRouterState state) {
-        return const DashboardView();
-      },
-      routes: [
-        GoRoute(
-          path: 'transactions',
-          builder: (BuildContext context, GoRouterState state) {
-            return const TransactionsView();
-          },
-        ),
-        GoRoute(
-          path: 'profile',
-          builder: (BuildContext context, GoRouterState state) {
-            return const ProfileView();
-          },
-        ),
-      ],
-    ),
-  ],
-);
+class Router {
+  static const dashboardView = '/dashboard';
+  static const transactionView = '/transaction';
+  static const profileView = '/profile';
+
+  static Route<dynamic>? generateRoute(RouteSettings settings) {
+    switch (settings.name) {
+      case dashboardView:
+        return MaterialPageRoute(builder: (_) => const DashboardView());
+      case transactionView:
+        return MaterialPageRoute(builder: (_) => const TransactionsView());
+      case profileView:
+        return MaterialPageRoute(builder: (_) => const ProfileView());
+      default:
+        return MaterialPageRoute(builder: (_) => const DashboardView());
+    }
+  }
+}
