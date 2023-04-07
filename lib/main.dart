@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:budgetkp/core/router/router.dart' as router;
 
 void main() {
   runApp(const MyApp());
@@ -9,16 +10,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Mi primera aplicación Flutter',
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Mi primera aplicación Flutter'),
-        ),
-        body: Center(
-          child: Text('¡Hola, mundo!'),
-        ),
-      ),
+    return const MaterialApp(
+      title: 'Budget App',
+      initialRoute: router.Router.dashboardView,
+      onGenerateRoute: router.Router.generateRoute,
     );
   }
 }
