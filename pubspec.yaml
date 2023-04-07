@@ -13,6 +13,7 @@ dependencies:
   flutter_svg: ^2.0.4
   get_it: ^7.2.0
   go_router: ^6.0.1
+  hooks_riverpod: ^2.3.3
   stacked_services: ^1.0.0
 
 dev_dependencies:
