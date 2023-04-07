@@ -40,84 +40,84 @@ class Themes {
     colorScheme: const ColorScheme.light(
         primary: AppColors.primary, secondary: AppColors.accent),
     textTheme: const TextTheme(
-      headline1: TextStyle(
+      displayLarge: TextStyle(
         fontFamily: 'Campton',
         fontSize: 52,
         height: 1,
         fontWeight: FontWeight.w600,
         color: AppColors.black,
       ),
-      headline2: TextStyle(
+      displayMedium: TextStyle(
         fontFamily: 'Campton',
         fontSize: 46,
         height: 1,
         fontWeight: FontWeight.w600,
         color: AppColors.black,
       ),
-      headline3: TextStyle(
+      displaySmall: TextStyle(
         fontFamily: 'Campton',
         fontSize: 40,
         height: 1,
         fontWeight: FontWeight.w600,
         color: AppColors.black,
       ),
-      headline4: TextStyle(
+      headlineMedium: TextStyle(
         fontFamily: 'Campton',
         fontSize: 32,
         height: 1.1,
         fontWeight: FontWeight.w600,
         color: AppColors.black,
       ),
-      headline5: TextStyle(
+      headlineSmall: TextStyle(
         fontFamily: 'Campton',
         fontSize: 27,
         height: 0.9,
         fontWeight: FontWeight.w600,
         color: AppColors.black,
       ),
-      headline6: TextStyle(
+      titleLarge: TextStyle(
         fontFamily: 'Campton',
         fontSize: 24,
         height: 1,
         fontWeight: FontWeight.w600,
         color: AppColors.black,
       ),
-      subtitle1: TextStyle(
+      titleMedium: TextStyle(
         fontFamily: 'Campton',
         fontSize: 20,
         height: 1,
         fontWeight: FontWeight.w600,
         color: AppColors.black,
       ),
-      subtitle2: TextStyle(
+      titleSmall: TextStyle(
         fontFamily: 'Campton',
         fontSize: 18,
         height: 1,
         fontWeight: FontWeight.w600,
         color: AppColors.black,
       ),
-      bodyText1: TextStyle(
+      bodyLarge: TextStyle(
         fontFamily: 'NotoSans',
         fontSize: 18,
         height: 1,
         fontWeight: FontWeight.normal,
         color: AppColors.black,
       ),
-      bodyText2: TextStyle(
+      bodyMedium: TextStyle(
         fontFamily: 'NotoSans',
         fontSize: 16,
         height: 1.4,
         fontWeight: FontWeight.normal,
         color: AppColors.black,
       ),
-      caption: TextStyle(
+      bodySmall: TextStyle(
         fontFamily: 'NotoSans',
         fontSize: 14,
         height: 1.4,
         fontWeight: FontWeight.normal,
         color: AppColors.black,
       ),
-      overline: TextStyle(
+      labelSmall: TextStyle(
         fontFamily: 'NotoSans',
         fontSize: 12,
         height: 1.4,
