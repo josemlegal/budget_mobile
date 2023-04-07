@@ -1,6 +1,8 @@
 import 'package:budgetkp/core/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:stacked_services/stacked_services.dart' as services;
+import 'package:budgetkp/core/dependency_injection/locator.dart';
 
 class CustomBottomNavbar extends StatefulWidget {
   final Function(int index) onSelectedPageChanged;
@@ -17,27 +19,23 @@ class CustomBottomNavbar extends StatefulWidget {
 class _CustomBottomNavbarState extends State<CustomBottomNavbar> {
   @override
   Widget build(BuildContext context) {
-    final List<String> _routes = [
+    final List<String> routes = [
       '/dashboard',
-      '/challenges',
-      '/navigation',
-      '/social',
+      '/transaction',
       '/profile',
     ];
 
     Map<String, String> icons = {
       "/dashboard": "assets/images/home_icon.svg",
-      "/challenges": "assets/images/challenges.svg",
-      "/navigation": "assets/images/route.svg",
-      "/social": "assets/images/social.svg",
+      "/transaction": "assets/images/route.svg",
       "/profile": "assets/images/profile.svg",
     };
 
-    int _selectedPageIndex = 0;
+    int selectedPageIndex = 0;
 
     void changeSelectedPageIndex(index) {
       setState(() {
-        _selectedPageIndex = index;
+        selectedPageIndex = index;
       });
       widget.onSelectedPageChanged(index);
     }
@@ -67,7 +65,7 @@ class _CustomBottomNavbarState extends State<CustomBottomNavbar> {
           type: BottomNavigationBarType.fixed,
           showUnselectedLabels: false,
           items: <BottomNavigationBarItem>[
-            for (var route in _routes)
+            for (var route in routes)
               BottomNavigationBarItem(
                 icon: Container(
                   margin: const EdgeInsets.only(bottom: 20, top: 8),
@@ -75,7 +73,7 @@ class _CustomBottomNavbarState extends State<CustomBottomNavbar> {
                     children: [
                       Container(
                         decoration: BoxDecoration(
-                          color: _routes.indexOf(route) == _selectedPageIndex
+                          color: routes.indexOf(route) == selectedPageIndex
                               ? AppColors.accent
                               : Colors.transparent,
                           borderRadius: BorderRadius.circular(30),
@@ -86,7 +84,7 @@ class _CustomBottomNavbarState extends State<CustomBottomNavbar> {
                       ),
                       SvgPicture.asset(
                         icons[route]!,
-                        color: _routes.indexOf(route) == _selectedPageIndex
+                        color: routes.indexOf(route) == selectedPageIndex
                             ? AppColors.accent
                             : AppColors.neutral,
                         height: 21,
@@ -97,18 +95,18 @@ class _CustomBottomNavbarState extends State<CustomBottomNavbar> {
                 label: "",
               ),
           ],
-          currentIndex: _selectedPageIndex,
+          currentIndex: selectedPageIndex,
           selectedItemColor: AppColors.primary,
           unselectedItemColor: AppColors.neutral,
           onTap: (index) {
-            // if (index == 3) {
-            //   final services.SnackbarService _snackbarService =
-            //       locator<services.SnackbarService>();
-            //   _snackbarService.showSnackbar(
-            //     message: "Coming soon!",
-            //   );
-            //   return;
-            // }
+            if (index == 1 || index == 3) {
+              final services.SnackbarService snackbarService =
+                  locator<services.SnackbarService>();
+              snackbarService.showSnackbar(
+                message: "Coming soon!",
+              );
+              return;
+            }
             changeSelectedPageIndex(index);
           },
         ),
