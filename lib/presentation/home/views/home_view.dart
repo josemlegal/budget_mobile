@@ -2,7 +2,7 @@ import 'package:budgetkp/core/dependency_injection/locator.dart';
 import 'package:budgetkp/core/theme/theme.dart';
 import 'package:budgetkp/presentation/auth/views/onboarding_view.dart';
 import 'package:budgetkp/presentation/dashboard/views/dashboard_view.dart';
-import 'package:budgetkp/presentation/home/controller/home_view_controller.dart';
+import 'package:budgetkp/presentation/profile/views/profile_view.dart';
 import 'package:budgetkp/presentation/transactions/views/transactions_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -18,22 +18,18 @@ class HomeView extends StatefulHookConsumerWidget {
 }
 
 class _HomeViewState extends ConsumerState<HomeView> {
-  bool isLoading = true;
+  bool isLoading = false;
 
-  int _selectedPageIndex = 0;
+  int selectedPageIndex = 1;
 
-  final List<Map<String, String>> _routes = [
+  final List<Map<String, String>> routes = [
     {
       'path': '/dashboard',
-      'icon': 'assets/images/home_icon.svg',
+      'icon': 'assets/images/dashboard.svg',
     },
     {
-      'path': '/challenges',
-      'icon': 'assets/images/challenges.svg',
-    },
-    {
-      'path': '/social',
-      'icon': 'assets/images/social.svg',
+      'path': '/transaction',
+      'icon': 'assets/images/transaction.svg',
     },
     {
       'path': '/profile',
@@ -41,11 +37,9 @@ class _HomeViewState extends ConsumerState<HomeView> {
     },
   ];
 
-  @override
+  // @override
   // void initState() {
-  //   WidgetsBinding.instance!.addPostFrameCallback((_) async {
-  //     await ref.read(homeViewProvider).fetchAppData();
-
+  //   WidgetsBinding.instance.addPostFrameCallback((_) async {
   //     setState(() {
   //       isLoading = false;
   //     });
@@ -55,15 +49,17 @@ class _HomeViewState extends ConsumerState<HomeView> {
 
   @override
   Widget build(BuildContext context) {
-    final _homeViewController = ref.watch(homeViewProvider);
     bool isVisible = true;
-    Widget _getSelectedPage(int index) {
+    Widget getSelectedPage(int index) {
       switch (index) {
         case 0:
           return const DashboardView();
 
         case 1:
           return const TransactionsView();
+
+        case 2:
+          return const ProfileView();
 
         default:
           return const OnboardingView();
@@ -72,28 +68,30 @@ class _HomeViewState extends ConsumerState<HomeView> {
 
     void changeSelectedPageIndex(index) {
       setState(() {
-        _selectedPageIndex = index;
+        selectedPageIndex = index;
       });
     }
 
     return Scaffold(
       body: isLoading
-          ? const Center(child: CircularProgressIndicator())
-          : _getSelectedPage(_selectedPageIndex),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: AppColors.accent,
-        onPressed: () {
-          _homeViewController.goToTransactionsView();
-        },
-        child: Padding(
-          padding: const EdgeInsets.only(top: 3, right: 3),
-          child: SvgPicture.asset(
-            'assets/images/route.svg',
-            color: Colors.white,
-          ),
-        ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+          ? const Center(
+              child: CircularProgressIndicator(),
+            )
+          : getSelectedPage(selectedPageIndex),
+      // floatingActionButton: FloatingActionButton(
+      //   backgroundColor: AppColors.accent,
+      //   onPressed: () {
+      //     _homeViewController.goToTransactionsView();
+      //   },
+      //   child: Padding(
+      //     padding: const EdgeInsets.only(top: 3, right: 3),
+      //     child: SvgPicture.asset(
+      //       'assets/images/transaction.svg',
+      //       color: Colors.white,
+      //     ),
+      //   ),
+      // ),
+      // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: isVisible
           ? BottomAppBar(
               shape: const CircularNotchedRectangle(),
@@ -132,65 +130,63 @@ class _HomeViewState extends ConsumerState<HomeView> {
                       type: BottomNavigationBarType.fixed,
                       showUnselectedLabels: false,
                       items: <BottomNavigationBarItem>[
-                        ..._routes
-                            .map((route) => BottomNavigationBarItem(
-                                  icon: Padding(
-                                    padding: EdgeInsets.only(
-                                        right: _routes.indexOf(route) == 2
-                                            ? 0
-                                            : MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.1,
-                                        left: _routes.indexOf(route) == 1
-                                            ? 0
-                                            : MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.1),
-                                    child: Container(
-                                      margin: const EdgeInsets.only(
-                                          bottom: 20, top: 8),
-                                      child: Column(
-                                        children: [
-                                          Container(
-                                            decoration: BoxDecoration(
-                                              color: _routes.indexOf(route) ==
-                                                      _selectedPageIndex
-                                                  ? AppColors.accent
-                                                  : Colors.transparent,
-                                              borderRadius:
-                                                  BorderRadius.circular(30),
-                                            ),
-                                            margin: const EdgeInsets.only(
-                                                bottom: 11),
-                                            height: 4,
-                                            width: 30,
-                                          ),
-                                          SvgPicture.asset(
-                                            route['icon']!,
-                                            color: _routes.indexOf(route) ==
-                                                    _selectedPageIndex
+                        ...routes
+                            .map(
+                              (route) => BottomNavigationBarItem(
+                                icon: Padding(
+                                  padding: EdgeInsets.only(
+                                      right: routes.indexOf(route) == 2
+                                          ? 0
+                                          : MediaQuery.of(context).size.width *
+                                              0.1,
+                                      left: routes.indexOf(route) == 1
+                                          ? 0
+                                          : MediaQuery.of(context).size.width *
+                                              0.1),
+                                  child: Container(
+                                    margin: const EdgeInsets.only(
+                                        bottom: 20, top: 8),
+                                    child: Column(
+                                      children: [
+                                        Container(
+                                          decoration: BoxDecoration(
+                                            color: routes.indexOf(route) ==
+                                                    selectedPageIndex
                                                 ? AppColors.accent
-                                                : AppColors.neutral,
-                                            height: 21,
+                                                : Colors.transparent,
+                                            borderRadius:
+                                                BorderRadius.circular(30),
                                           ),
-                                        ],
-                                      ),
+                                          margin:
+                                              const EdgeInsets.only(bottom: 11),
+                                          height: 4,
+                                          width: 30,
+                                        ),
+                                        SvgPicture.asset(
+                                          route['icon']!,
+                                          color: routes.indexOf(route) ==
+                                                  selectedPageIndex
+                                              ? AppColors.accent
+                                              : AppColors.neutral,
+                                          height: 21,
+                                        ),
+                                      ],
                                     ),
                                   ),
-                                  label: "",
-                                ))
+                                ),
+                                label: "",
+                              ),
+                            )
                             .toList()
                       ],
-                      currentIndex: _selectedPageIndex,
+                      currentIndex: selectedPageIndex,
                       selectedItemColor: AppColors.primary,
                       unselectedItemColor: AppColors.neutral,
                       onTap: (index) {
-                        if (index == 0 || index == 1) {
-                          final services.SnackbarService _snackbarService =
+                        if (index == 0 || index == 2) {
+                          final services.SnackbarService snackbarService =
                               locator<services.SnackbarService>();
-                          _snackbarService.showSnackbar(
+                          snackbarService.showSnackbar(
                             message: "Coming soon!",
                           );
                           return;
