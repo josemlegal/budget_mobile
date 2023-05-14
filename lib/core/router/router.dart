@@ -1,27 +1,23 @@
-import 'package:budgetkp/presentation/dashboard/views/dashboard_view.dart';
-import 'package:budgetkp/presentation/home/views/home_view.dart';
-import 'package:budgetkp/presentation/profile/views/profile_view.dart';
-import 'package:budgetkp/presentation/transactions/views/transactions_view.dart';
-import 'package:flutter/material.dart';
+import 'package:budgetkp/presentation/views.dart';
+import 'package:go_router/go_router.dart';
 
-class Router {
-  static const homeView = '/home';
-  static const dashboardView = '/dashboard';
-  static const transactionView = '/transaction';
-  static const profileView = '/profile';
-
-  static Route<dynamic>? generateRoute(RouteSettings settings) {
-    switch (settings.name) {
-      case dashboardView:
-        return MaterialPageRoute(builder: (_) => const DashboardView());
-      case transactionView:
-        return MaterialPageRoute(builder: (_) => const TransactionsView());
-      case profileView:
-        return MaterialPageRoute(builder: (_) => const ProfileView());
-      case homeView:
-        return MaterialPageRoute(builder: (_) => const HomeView());
-      default:
-        return MaterialPageRoute(builder: (_) => const TransactionsView());
-    }
-  }
-}
+final appRouter = GoRouter(
+  initialLocation: '/onboarding-view',
+  routes: [
+    GoRoute(
+      path: '/login-view',
+      name: LoginView.name,
+      builder: (context, state) => const LoginView(),
+    ),
+    GoRoute(
+      path: '/settings-view',
+      name: SettingsView.name,
+      builder: (context, state) => const SettingsView(),
+    ),
+    GoRoute(
+      path: '/onboarding-view',
+      name: OnboardingView.name,
+      builder: (context, state) => const OnboardingView(),
+    ),
+  ],
+);
