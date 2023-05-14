@@ -1,19 +1,13 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/widgets/placeholder.dart';
 
-class TransactionsView extends StatefulWidget {
+class TransactionsView extends StatelessWidget {
   const TransactionsView({super.key});
 
-  @override
-  State<TransactionsView> createState() => _TransactionsViewState();
-}
+  static const name = '/transactions-view';
 
-class _TransactionsViewState extends State<TransactionsView> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: Text('Transactions'),
-      ),
-    );
+    return const Placeholder();
   }
 }
