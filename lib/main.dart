@@ -1,27 +1,32 @@
 import 'package:budgetkp/core/dependency_injection/locator.dart';
+import 'package:budgetkp/core/router/router.dart';
+import 'package:budgetkp/core/theme/theme.dart';
 import 'package:flutter/material.dart';
-import 'package:budgetkp/core/router/router.dart' as router;
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'presentation/settings/controllers/settings_controller.dart';
 
 void main() {
-  setupLocator();
-
-  final container = ProviderContainer();
   runApp(
-    UncontrolledProviderScope(container: container, child: MyApp()),
+    const ProviderScope(
+      child: MainApp(),
+    ),
   );
+  setupLocator();
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class MainApp extends ConsumerWidget {
+  const MainApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
+  Widget build(BuildContext context, ref) {
+    final AppTheme appTheme = ref.watch(themeNotifierProvider);
+
+    return MaterialApp.router(
+      themeMode: appTheme.isDarkMode ? ThemeMode.dark : ThemeMode.light,
+      title: 'Itti App',
+      routerConfig: appRouter,
       debugShowCheckedModeBanner: false,
-      title: 'Budget App',
-      initialRoute: router.Router.homeView,
-      onGenerateRoute: router.Router.generateRoute,
+      theme: appTheme.getTheme(),
     );
   }
 }
